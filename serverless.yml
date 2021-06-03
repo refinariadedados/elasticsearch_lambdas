@@ -1,0 +1,24 @@
+service: elasticsearch
+
+frameworkVersion: "2"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: ${opt:stage}
+  region: us-east-1
+  lambdaHashingVersion: 20201221
+
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
+
+useDotenv: true
+
+functions:
+  persist:
+    handler: index.handler
+    events:
+      - http:
+          path: /persist
+          method: POST
